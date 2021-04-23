@@ -665,7 +665,7 @@ mouse.coords {
 }
 awful.screen.focus(awful.screen.getbycoord(0,0))
 
---awful.spawn.once("nm-applet &")
---awful.spawn.once("redshift -l 48:9 &")
---awful.spawn.once("compton --config ~/.compton.conf &")
+awful.spawn.once("nm-applet &")
+awful.spawn.once("redshift -l 48:9 &")
+awful.spawn.once("compton --config ~/.compton.conf &")
 
