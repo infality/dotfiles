@@ -1,0 +1,5 @@
+URxvt.iso14755: false
+URxvt.depth: 32
+URxvt.background: [100]#1d1f21
+Xcursor.theme: Breeze-Obsidian
+Xcursor.size: 16

@@ -1,0 +1,239 @@
+{
+    "vim.smartcase": true,
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<C-k>"
+            ],
+            "commands": [
+                "editor.action.moveLinesUpAction"
+            ]
+        },
+        {
+            "before": [
+                "<C-j>"
+            ],
+            "commands": [
+                "editor.action.moveLinesDownAction"
+            ]
+        },
+        {
+            "before": [
+                "#"
+            ],
+            "after": [
+                "*",
+                "N",
+                "z",
+                "z"
+            ]
+        },
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.formatDocument"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "}",
+                "z",
+                "z"
+            ]
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "after": [
+                "{",
+                "z",
+                "z"
+            ]
+        },
+        {
+            "before": [
+                "<C-i>"
+            ],
+            "after": [
+                "J"
+            ]
+        },
+        {
+            "before": [
+                "<C-v>"
+            ],
+            "after": [
+                "\"",
+                "+",
+                "p"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "h"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "H"
+            ],
+            "after": [
+                "0"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "l"
+            ],
+            "after": [
+                "g",
+                "_"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        // {
+        //     "before": [
+        //         "u"
+        //     ],
+        //     "commands": [
+        //         "undo"
+        //     ]
+        // },
+        // {
+        //     "before": [
+        //         "<C-r>"
+        //     ],
+        //     "commands": [
+        //         "redo"
+        //     ]
+        // },
+        {
+            "before": [
+                "<C-w>"
+            ],
+            "commands": [
+                "workbench.action.closeActiveEditor"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<C-i>"
+            ],
+            "after": [
+                "J"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "}",
+                "z",
+                "z"
+            ]
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "after": [
+                "{",
+                "z",
+                "z"
+            ]
+        },
+        {
+            "before": [
+                "<C-k>"
+            ],
+            "commands": [
+                "editor.action.moveLinesUpAction"
+            ]
+        },
+        {
+            "before": [
+                "<C-j>"
+            ],
+            "commands": [
+                "editor.action.moveLinesDownAction"
+            ]
+        }
+    ],
+    "window.menuBarVisibility": "toggle",
+    "C_Cpp.default.cppStandard": "c++11",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 170, IncludeBlocks: Preserve}",
+    "clang-format.style": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 170, IncludeBlocks: Preserve}",
+    "editor.wordWrap": "on",
+    "editor.fontFamily": "'DejaVu Sans Mono'",
+    "workbench.activityBar.visible": false,
+    "workbench.tips.enabled": false,
+    "debug.console.closeOnEnd": true,
+    "debug.showBreakpointsInOverviewRuler": true,
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "explorer.autoReveal": false,
+    "[cuda]": {},
+    "[cpp]": {
+        "editor.defaultFormatter": "xaver.clang-format"
+    },
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.idx",
+        "*.ind",
+        "*.lof",
+        "*.lot",
+        "*.out",
+        "*.toc",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.fls",
+        "*.log",
+        "*.fdb_latexmk",
+        "*.snm",
+        "*.synctex",
+        "*.synctex.gz",
+        "*.nav",
+        "*.vrb",
+        "_minted-presentation/*"
+    ],
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "csv-edit.readOption_hasHeader": "true",
+    "window.zoomLevel": 0,
+    "latex-workshop.message.update.show": false,
+    "markdown-pdf.scale": 0.7
+}
