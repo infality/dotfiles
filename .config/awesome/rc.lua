@@ -64,8 +64,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
@@ -331,6 +331,9 @@ end
 
 -- Mouse bindings
 root.buttons(gears.table.join(
+    awful.button({ }, 1, function (c)
+        client.focus = nil
+    end),
     awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, view_prev_active_tag),
     awful.button({ }, 5, view_next_active_tag)
