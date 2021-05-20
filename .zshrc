@@ -1,6 +1,15 @@
 export ZSH=/usr/share/oh-my-zsh
 export BROWSER=/usr/bin/firefox
-PROMPT='%F{cyan}[%n %f%1~%F{cyan}]%#%f '
+
+# Load version control information
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# Format the vcs_info_msg_0_ variable
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' formats '[%F{blue}%b %F{red}%u%F{green}%c%F{cyan}]'
+
+PROMPT='%F{cyan}[%n %f%1~%F{cyan}]${vcs_info_msg_0_}%#%f '
 
 export HISTCONTROL=ignorespace
 
@@ -19,7 +28,7 @@ compinit
 
 texedit() { zathura ${1:0:-3}pdf &; nvim "$1"; }
 alias bpm="python ~/Programming/python/bpm.py"
-alias weather="python ~/Programming/weather/weather.py"
+alias weather="python ~/Programming/python/weather/weather.py"
 alias xclip="xclip -selection c"
 alias win=~/bootWindows.sh
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
