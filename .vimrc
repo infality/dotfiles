@@ -104,7 +104,7 @@ autocmd BufNewFile,BufRead *.cpp noremap <C-S> :w<CR>:!./run.sh<CR>
 autocmd BufNewFile,BufRead *.pde noremap <C-S> :w<CR>:!processing-java --sketch=%:t:r --run<CR>
 autocmd BufNewFile,BufRead *.cpp,*.c,*.cu,*.h,*.hpp nnoremap > :ClangFormat<CR>
 autocmd BufNewFile,BufRead *.py nnoremap > :Autopep8<CR>
-autocmd BufNewFile,BufRead *.rs nnoremap > :%! rustfmt<CR>
+autocmd BufNewFile,BufRead *.rs nnoremap > :let b:caret = winsaveview() <bar> execute '%! rustfmt' <bar> call winrestview(b:caret)<CR>
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
