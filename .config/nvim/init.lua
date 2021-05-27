@@ -16,6 +16,7 @@ paq {'hrsh7th/nvim-compe'}
 paq {'lewis6991/gitsigns.nvim'}
 paq {'b3nj5m1n/kommentary'}
 paq {'arcticicestudio/nord-vim'}
+paq {'vim-airline/vim-airline'}
 
 
 -- Helper to ensure global buffer is set
@@ -34,6 +35,7 @@ cmd('hi clear CursorLine')
 cmd('hi cursorlinenr guifg=bold')
 cmd('autocmd ColorScheme nord highlight Comment ctermfg=7')
 cmd('autocmd ColorScheme nord highlight Visual ctermbg=8')
+g['airline_powerline_fonts'] = true
 
 cmd('syntax enable')
 cmd('filetype indent on')
