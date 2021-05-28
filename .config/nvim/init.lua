@@ -35,6 +35,10 @@ cmd('hi clear CursorLine')
 cmd('hi cursorlinenr guifg=bold')
 cmd('autocmd ColorScheme nord highlight Comment ctermfg=7')
 cmd('autocmd ColorScheme nord highlight Visual ctermbg=8')
+cmd('autocmd ColorScheme nord highlight LspDiagnosticsDefaultError ctermfg=9')
+cmd('autocmd ColorScheme nord highlight LspDiagnosticsDefaultWarning ctermfg=136')
+cmd('autocmd ColorScheme nord highlight LspDiagnosticsDefaultInformation ctermfg=136')
+cmd('autocmd ColorScheme nord highlight LspDiagnosticsDefaultHint ctermfg=136')
 g['airline_powerline_fonts'] = true
 
 cmd('syntax enable')
@@ -66,16 +70,13 @@ end
 g['mapleader'] = ' '
 map('n', '<C-k>', '<cmd>m-2<CR>')
 map('n', '<C-j>', '<cmd>m+<CR>')
-map('n', 'J', '}zz')
-map('n', 'K', '{zz')
+map('n', '<A-j>', '}zz')
+map('n', '<A-k>', '{zz')
 map('n', '<esc>', '<cmd>noh<CR>')
 map('n', '#', '*Nzz')
 
-map('n', '<C-i>', 'J')
-map('v', '<C-i>', 'J')
-
-map('v', 'J', '}zz')
-map('v', 'K', '{zz')
+map('v', '<A-j>', '}zz')
+map('v', '<A-k>', '{zz')
 
 map('v', '<C-y>', '"+y')
 map('n', '<C-p>', '"+p')
@@ -95,19 +96,30 @@ treesitter.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 local lsp = require('lspconfig')
 
 lsp.clangd.setup {}
+lsp.rls.setup {
+  settings = {
+    rust = {
+      unstable_features = true,
+      build_on_save = false,
+      all_features = true,
+    },
+  },
+}
+lsp.tsserver.setup{}
 lsp.pyls.setup {root_dir = lsp.util.root_pattern('.git', fn.getcwd())}
 
 map('n', 'gk', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', 'gj', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '>', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 map('n', 'gi', '<cmd>lua vim.lsp.buf.hover()<CR>')
 --map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', 'gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
 
+map('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
+map('n', 'gs', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>')
+map('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>')
+map('n', 'ga', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>')
+map('n', 'gl', '<cmd>lua require("telescope.builtin").lsp_document_diagnostics()<CR>')
 map('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<CR>')
 map('n', '<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<CR>')
 map('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<CR>')
@@ -165,8 +177,6 @@ end
 _G.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
     return t "<C-n>"
-  elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
   elseif check_back_space() then
     return t "<Tab>"
   else
@@ -176,8 +186,6 @@ end
 _G.s_tab_complete = function()
   if vim.fn.pumvisible() == 1 then
     return t "<C-p>"
-  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
   else
     return t "<S-Tab>"
   end
