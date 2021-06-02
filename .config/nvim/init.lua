@@ -16,21 +16,20 @@ paq {"nvim-telescope/telescope.nvim"}
 paq {"hrsh7th/nvim-compe"}
 paq {"lewis6991/gitsigns.nvim"}
 paq {"b3nj5m1n/kommentary"}
-paq {"shaunsingh/nord.nvim"}
+paq {"rktjmp/lush.nvim"}
+paq {"arcticicestudio/nord-vim"}
 paq {"vim-airline/vim-airline"}
 paq {"kyazdani42/nvim-web-devicons"}
 paq {"romgrk/barbar.nvim"}
 
 
 -- Settings
-require("nord").set()
-cmd("autocmd ColorScheme nord highlight Normal guibg=#1d1f21")
-cmd("se cul")
-cmd("autocmd ColorScheme nord highlight CursorLine guibg=#2a2c2f")
-cmd("autocmd ColorScheme nord highlight LspDiagnosticsDefaultError ctermfg=9")
-cmd("autocmd ColorScheme nord highlight LspDiagnosticsDefaultWarning ctermfg=136")
-cmd("autocmd ColorScheme nord highlight LspDiagnosticsDefaultInformation ctermfg=136")
-cmd("autocmd ColorScheme nord highlight LspDiagnosticsDefaultHint ctermfg=136")
+cmd("colorscheme nord")
+cmd('se cul')
+cmd('hi clear CursorLine')
+cmd('hi cursorlinenr guifg=bold')
+cmd('autocmd ColorScheme nord highlight Comment ctermfg=7')
+cmd('autocmd ColorScheme nord highlight Visual ctermbg=8')
 g.airline_powerline_fonts = true
 
 cmd("syntax enable")
