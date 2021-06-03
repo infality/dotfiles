@@ -16,22 +16,35 @@ paq {"nvim-telescope/telescope.nvim"}
 paq {"hrsh7th/nvim-compe"}
 paq {"lewis6991/gitsigns.nvim"}
 paq {"b3nj5m1n/kommentary"}
-paq {"rktjmp/lush.nvim"}
-paq {"arcticicestudio/nord-vim"}
 paq {"vim-airline/vim-airline"}
 paq {"kyazdani42/nvim-web-devicons"}
 paq {"romgrk/barbar.nvim"}
 
+--paq {"arcticicestudio/nord-vim"}
+paq {"sainnhe/sonokai"}
+paq {"tomasiser/vim-code-dark"}
+paq {"rktjmp/lush.nvim"}
+paq {"kunzaatko/nord.nvim"}
 
--- Settings
-cmd("colorscheme nord")
+
+-- Color scheme
+--[[ vim.g.sonokai_transparent_background = true
+cmd("colorscheme sonokai") ]]
+
+cmd("colorscheme codedark")
+
+--cmd("colorscheme nord")
+
+--[[ cmd("colorscheme nord")
 cmd('se cul')
 cmd('hi clear CursorLine')
 cmd('hi cursorlinenr guifg=bold')
 cmd('autocmd ColorScheme nord highlight Comment ctermfg=7')
-cmd('autocmd ColorScheme nord highlight Visual ctermbg=8')
+cmd('autocmd ColorScheme nord highlight Visual ctermbg=8') ]]
 g.airline_powerline_fonts = true
 
+
+-- Settings
 cmd("syntax enable")
 cmd("filetype indent on")
 opt.autoindent = true
@@ -87,15 +100,7 @@ treesitter.setup {ensure_installed = "maintained", highlight = {enable = true}}
 local lsp = require("lspconfig")
 
 lsp.clangd.setup {}
-lsp.rls.setup {
-  settings = {
-    rust = {
-      unstable_features = true,
-      build_on_save = false,
-      all_features = true,
-    },
-  },
-}
+lsp.rust_analyzer.setup{}
 lsp.tsserver.setup{}
 lsp.pyls.setup {root_dir = lsp.util.root_pattern(".git", fn.getcwd())}
 
