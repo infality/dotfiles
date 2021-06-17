@@ -12,35 +12,35 @@ paq {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
 paq {"neovim/nvim-lspconfig"}
 paq {"nvim-lua/popup.nvim"}
 paq {"nvim-lua/plenary.nvim"}
+paq {"kyazdani42/nvim-web-devicons"}
 paq {"nvim-telescope/telescope.nvim"}
 paq {"hrsh7th/nvim-compe"}
 paq {"lewis6991/gitsigns.nvim"}
 paq {"b3nj5m1n/kommentary"}
 paq {"vim-airline/vim-airline"}
-paq {"kyazdani42/nvim-web-devicons"}
 paq {"romgrk/barbar.nvim"}
 
---paq {"arcticicestudio/nord-vim"}
+paq {"arcticicestudio/nord-vim"}
 paq {"sainnhe/sonokai"}
 paq {"tomasiser/vim-code-dark"}
 paq {"rktjmp/lush.nvim"}
-paq {"kunzaatko/nord.nvim"}
+--paq {"kunzaatko/nord.nvim"}
 
 
 -- Color scheme
 --[[ vim.g.sonokai_transparent_background = true
 cmd("colorscheme sonokai") ]]
 
-cmd("colorscheme codedark")
+--cmd("colorscheme codedark")
 
 --cmd("colorscheme nord")
 
---[[ cmd("colorscheme nord")
+cmd("colorscheme nord")
 cmd('se cul')
 cmd('hi clear CursorLine')
 cmd('hi cursorlinenr guifg=bold')
 cmd('autocmd ColorScheme nord highlight Comment ctermfg=7')
-cmd('autocmd ColorScheme nord highlight Visual ctermbg=8') ]]
+cmd('autocmd ColorScheme nord highlight Visual ctermbg=8')
 g.airline_powerline_fonts = true
 
 
@@ -117,6 +117,7 @@ map("n", "gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>")
 map("n", "ga", "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>")
 map("n", "gl", "<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>")
 map("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
+map("n", "<leader>fd", "<cmd>lua require('telescope.builtin').file_browser()<CR>")
 map("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
 map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<CR>")
 map("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
@@ -157,7 +158,7 @@ require("compe").setup {
     autocomplete = true;
     debug = false;
     min_length = 1;
-    preselect = "enable";
+    preselect = "disable";
     throttle_time = 80;
     source_timeout = 200;
     incomplete_delay = 400;
