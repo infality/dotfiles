@@ -28,7 +28,8 @@ compinit
 
 texedit() { zathura ${1:0:-3}pdf &; nvim "$1"; }
 alias bpm="python ~/Programming/python/bpm.py"
-alias weather="python ~/Programming/python/weather/weather.py"
+alias weather="~/Programming/rust/weather/target/release/weather"
+alias ydl="youtube-dl -o '~/Music/%(title)s.%(ext)s' -f m4a"
 alias xclip="xclip -selection c"
 alias win=~/bootWindows.sh
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'

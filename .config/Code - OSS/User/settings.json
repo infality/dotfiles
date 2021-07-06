@@ -235,5 +235,6 @@
     "csv-edit.readOption_hasHeader": "true",
     "window.zoomLevel": 0,
     "latex-workshop.message.update.show": false,
-    "markdown-pdf.scale": 0.7
+    "markdown-pdf.scale": 0.7,
+    "workbench.startupEditor": "newUntitledFile"
 }

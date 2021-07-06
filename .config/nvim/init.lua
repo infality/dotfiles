@@ -17,31 +17,34 @@ paq {"nvim-telescope/telescope.nvim"}
 paq {"hrsh7th/nvim-compe"}
 paq {"lewis6991/gitsigns.nvim"}
 paq {"b3nj5m1n/kommentary"}
-paq {"vim-airline/vim-airline"}
 paq {"romgrk/barbar.nvim"}
+paq {"norcalli/nvim-colorizer.lua"}
 
-paq {"arcticicestudio/nord-vim"}
-paq {"sainnhe/sonokai"}
-paq {"tomasiser/vim-code-dark"}
-paq {"rktjmp/lush.nvim"}
---paq {"kunzaatko/nord.nvim"}
+--paq {"arcticicestudio/nord-vim"}
+paq {"hoob3rt/lualine.nvim"}
+paq {"kyazdani42/nvim-web-devicons"}
+paq {"ryanoasis/vim-devicons"}
 
 
 -- Color scheme
---[[ vim.g.sonokai_transparent_background = true
-cmd("colorscheme sonokai") ]]
-
---cmd("colorscheme codedark")
-
---cmd("colorscheme nord")
-
-cmd("colorscheme nord")
+cmd('set termguicolors')
+--g.nord_disable_background = true
+require('nord').set()
 cmd('se cul')
 cmd('hi clear CursorLine')
 cmd('hi cursorlinenr guifg=bold')
-cmd('autocmd ColorScheme nord highlight Comment ctermfg=7')
-cmd('autocmd ColorScheme nord highlight Visual ctermbg=8')
-g.airline_powerline_fonts = true
+
+require('lualine').setup {
+    options = {theme = 'onedark'},
+    sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch'},
+        lualine_c = {{'filename', path = 2}},
+        lualine_x = {'encoding', 'fileformat', 'filetype'},
+        lualine_y = {{'diagnostics', sources = {'nvim_lsp'}}},
+        lualine_z = {'location'}
+    },
+}
 
 
 -- Settings
@@ -103,6 +106,11 @@ lsp.clangd.setup {}
 lsp.rust_analyzer.setup{}
 lsp.tsserver.setup{}
 lsp.pyls.setup {root_dir = lsp.util.root_pattern(".git", fn.getcwd())}
+local pid = vim.fn.getpid()
+local omnisharp_bin = "/home/alex/Programming/avalonia/omnisharp-linux-x64/run"
+lsp.omnisharp.setup{
+    cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) },
+}
 
 map("n", "gk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
 map("n", "gj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
@@ -116,11 +124,21 @@ map("n", "gs", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>
 map("n", "gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>")
 map("n", "ga", "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>")
 map("n", "gl", "<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>")
-map("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
+map("n", "<leader>ff", "<cmd>lua require('telescope.builtin').git_files()<CR>")
 map("n", "<leader>fd", "<cmd>lua require('telescope.builtin').file_browser()<CR>")
 map("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
 map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<CR>")
 map("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
+local actions = require('telescope.actions')
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close
+      },
+    },
+  }
+}
 
 
 require("gitsigns").setup {
@@ -208,10 +226,12 @@ _G.s_tab_complete = function()
   end
 end
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+map("i", "<C-Space>", "compe#complete()", {expr = true})
+map("i", "<CR>", "compe#confirm('<CR>')", {expr = true})
+map("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+map("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
 
 -- Tab bar
@@ -219,4 +239,9 @@ map("n", "<A-l>", "<cmd>BufferNext<CR>")
 map("n", "<A-h>", "<cmd>BufferPrevious<CR>")
 map("n", "<C-w>", "<cmd>BufferClose<CR>")
 map("n", "<A-p>", "<cmd>BufferPick<CR>")
+
+require('colorizer').setup()
+
+-- nvim bug workaround https://github.com/neovim/neovim/issues/11330
+cmd('autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"')
 
