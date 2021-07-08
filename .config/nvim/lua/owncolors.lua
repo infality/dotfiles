@@ -1,6 +1,17 @@
 local owncolors = {
     background = '#1d1f21',
-    foreground = '#C5C8C6',
+    foreground = '#c5c8c6',
+
+    slightlylight = '#788087',
+    light = '#4c566a',
+    verylight = '#303336',
+    yellow = '#8c9440',
+    orange = '#a66b30',
+    green = '#5e8d6a',
+    turquoise = '#5e8d87',
+    blue = '#5e81ac',
+    _purple = '#477ec2',
+    red = '#cd515d',
 }
 
 local syntaxgroups = {
@@ -10,7 +21,7 @@ local syntaxgroups = {
     lCursor = { fg = owncolors.foreground },
     CursorIM = { fg = owncolors.foreground },
     CursorColumn = { fg = owncolors.foreground },
-    CursorLine = { fg = owncolors.foreground },
+    CursorLine = { bg = owncolors.verylight },
     Directory = { fg = owncolors.foreground },
     DiffAdd = { fg = owncolors.foreground },
     DiffChange = { fg = owncolors.foreground },
@@ -19,14 +30,14 @@ local syntaxgroups = {
     EndOfBuffer = { fg = owncolors.foreground },
     TermCursor = { fg = owncolors.foreground },
     TermCursorNC = { fg = owncolors.foreground },
-    ErrorMsg = { fg = owncolors.foreground },
+    ErrorMsg = { fg = owncolors.red },
     VertSplit = { fg = owncolors.foreground },
     Folded = { fg = owncolors.foreground },
     FoldColumn = { fg = owncolors.foreground },
     SignColumn = { fg = owncolors.foreground },
     IncSearch = { fg = owncolors.foreground },
     Substitute = { fg = owncolors.foreground },
-    LineNr = { fg = owncolors.foreground },
+    LineNr = { fg = owncolors.light },
     CursorLineNr = { fg = owncolors.foreground },
     MatchParen = { fg = owncolors.foreground },
     ModeMsg = { fg = owncolors.foreground },
@@ -52,20 +63,20 @@ local syntaxgroups = {
     StatusLine = { fg = owncolors.foreground },
     StatusLineNC = { fg = owncolors.foreground },
     TabLine = { fg = owncolors.foreground },
-    TabLineFill = { fg = owncolors.foreground },
+    TabLineFill = { fg = owncolors.slightlylight, bg = owncolors.verylight },
     TabLineSel = { fg = owncolors.foreground },
     Title = { fg = owncolors.foreground },
-    Visual = { fg = owncolors.foreground },
+    Visual = { bg = owncolors.verylight },
     VisualNOS = { fg = owncolors.foreground },
-    WarningMsg = { fg = owncolors.foreground },
-    Whitespace = { fg = owncolors.foreground },
+    WarningMsg = { fg = owncolors.orange },
+    Whitespace = { fg = owncolors.blue },
     WildMenu = { fg = owncolors.foreground },
 
-    Type = { fg = owncolors.foreground },
+    Type = { fg = owncolors.blue },
     StorageClass = { fg = owncolors.foreground },
     Structure = { fg = owncolors.foreground },
     Constant = { fg = owncolors.foreground },
-    String = { fg = owncolors.foreground },
+    String = { fg = owncolors.yellow },
     Character = { fg = owncolors.foreground },
     Number = { fg = owncolors.foreground },
     Boolean = { fg = owncolors.foreground },
@@ -88,17 +99,17 @@ local syntaxgroups = {
     Debug = { fg = owncolors.foreground },
     Underlined = { fg = owncolors.foreground },
     Ignore = { fg = owncolors.foreground },
-    Error= { fg = owncolors.foreground },
+    Error= { fg = owncolors.red },
     Todo = { fg = owncolors.foreground },
-    Comment = { fg = owncolors.foreground },
+    Comment = { fg = owncolors.light },
     Conditional = { fg = owncolors.foreground },
     Keyword = { fg = owncolors.foreground },
     Repeat = { fg = owncolors.foreground },
     Function = { fg = owncolors.foreground },
 
     -- Misc
-    TSComment = { fg = owncolors.foreground },
-    TSError = { fg = owncolors.foreground },
+    TSComment = { fg = owncolors.light },
+    TSError = { fg = owncolors.red },
     TSPunctDelimiter = { fg = owncolors.foreground },
     TSPunctBracket = { fg = owncolors.foreground },
     TSPunctSpecial = { fg = owncolors.foreground },
@@ -107,9 +118,9 @@ local syntaxgroups = {
     TSConstant = { fg = owncolors.foreground },
     TSConstBuiltin = { fg = owncolors.foreground },
     TSConstMacro = { fg = owncolors.foreground },
-    TSString = { fg = owncolors.foreground },
-    TSStringRegex = { fg = owncolors.foreground },
-    TSStringEscape = { fg = owncolors.foreground },
+    TSString = { fg = owncolors.yellow },
+    TSStringRegex = { fg = owncolors.yellow },
+    TSStringEscape = { fg = owncolors.orange },
     TSCharacter = { fg = owncolors.foreground },
     TSNumber = { fg = owncolors.foreground },
     TSBoolean = { fg = owncolors.foreground },
@@ -120,11 +131,11 @@ local syntaxgroups = {
 
     -- Functions
     TSFuncBuiltin = { fg = owncolors.foreground },
-    TSFunction = { fg = owncolors.foreground },
+    TSFunction = { fg = owncolors.turquoise },
     TSFuncMacro = { fg = owncolors.foreground },
     TSParameter = { fg = owncolors.foreground },
     TSParameterReference = { fg = owncolors.foreground },
-    TSMethod = { fg = owncolors.foreground },
+    TSMethod = { fg = owncolors.turquoise },
     TSField = { fg = owncolors.foreground },
     TSProperty = { fg = owncolors.foreground },
     TSConstructor = { fg = owncolors.foreground },
@@ -138,8 +149,8 @@ local syntaxgroups = {
     TSKeywordOperator = { fg = owncolors.foreground },
     TSOperator = { fg = owncolors.foreground },
     TSException = { fg = owncolors.foreground },
-    TSType = { fg = owncolors.foreground },
-    TSTypeBuiltin = { fg = owncolors.foreground },
+    TSType = { fg = owncolors.blue },
+    TSTypeBuiltin = { fg = owncolors.blue },
     TSStructure = { fg = owncolors.foreground },
     TSInclude = { fg = owncolors.foreground },
 
@@ -161,16 +172,16 @@ local syntaxgroups = {
     TSTagDelimiter = { fg = owncolors.foreground },
 
     -- LSP
-    LspDiagnosticsDefaultError = { fg = owncolors.foreground },
-    LspDiagnosticsSignError = { fg = owncolors.foreground },
-    LspDiagnosticsFloatingError = { fg = owncolors.foreground },
-    LspDiagnosticsVirtualTextError = { fg = owncolors.foreground },
-    LspDiagnosticsUnderlineError = { fg = owncolors.foreground },
-    LspDiagnosticsDefaultWarning = { fg = owncolors.foreground },
-    LspDiagnosticsSignWarning = { fg = owncolors.foreground },
-    LspDiagnosticsFloatingWarning = { fg = owncolors.foreground },
-    LspDiagnosticsVirtualTextWarning = { fg = owncolors.foreground },
-    LspDiagnosticsUnderlineWarning = { fg = owncolors.foreground },
+    LspDiagnosticsDefaultError = { fg = owncolors.red },
+    LspDiagnosticsSignError = { fg = owncolors.red },
+    LspDiagnosticsFloatingError = { fg = owncolors.red },
+    LspDiagnosticsVirtualTextError = { fg = owncolors.red },
+    LspDiagnosticsUnderlineError = { fg = owncolors.red },
+    LspDiagnosticsDefaultWarning = { fg = owncolors.orange },
+    LspDiagnosticsSignWarning = { fg = owncolors.orange },
+    LspDiagnosticsFloatingWarning = { fg = owncolors.orange },
+    LspDiagnosticsVirtualTextWarning = { fg = owncolors.orange },
+    LspDiagnosticsUnderlineWarning = { fg = owncolors.orange },
     LspDiagnosticsDefaultInformation = { fg = owncolors.foreground },
     LspDiagnosticsSignInformation = { fg = owncolors.foreground },
     LspDiagnosticsFloatingInformation = { fg = owncolors.foreground },
@@ -212,18 +223,19 @@ local syntaxgroups = {
 
 -- sp = special (underline color etc)
 owncolors.highlight = function()
-    vim.api.nvim_command('hi clear')
+    vim.cmd('hi clear')
     if vim.fn.exists('syntax_on') then
-        vim.api.nvim_command('syntax reset')
+        vim.cmd('syntax reset')
     end
     vim.o.background = 'dark'
     vim.o.termguicolors = true
+    vim.cmd('se cul')
     for g,c in pairs(syntaxgroups) do
         local style = c.style and 'gui=' .. c.style or 'gui=NONE'
         local fg = c.fg and 'guifg=' .. c.fg or 'guifg=NONE'
         local bg = c.bg and 'guibg=' .. c.bg or 'guibg=NONE'
         local sp = c.sp and 'guisp=' .. c.sp or ''
-        vim.api.nvim_command('highlight ' .. g .. ' ' .. style .. ' ' .. fg .. ' ' .. bg..' '..sp)
+        vim.cmd('highlight ' .. g .. ' ' .. style .. ' ' .. fg .. ' ' .. bg..' '..sp)
     end
 end
 

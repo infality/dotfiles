@@ -27,11 +27,7 @@ paq {"ryanoasis/vim-devicons"}
 
 
 -- Color scheme
-cmd('set termguicolors')
-require('owncolors')--.set()
---cmd('se cul')
---cmd('hi clear CursorLine')
---cmd('hi cursorlinenr guifg=bold')
+require('owncolors')
 
 require('lualine').setup {
     options = {theme = 'onedark'},
