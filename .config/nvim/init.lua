@@ -232,8 +232,10 @@ map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 -- Tab bar
 map("n", "<C-Tab>", "<cmd>BufferNext<CR>")
 map("n", "<C-S-Tab>", "<cmd>BufferPrevious<CR>")
-map("n", "<A-l>", "<cmd>BufferMoveNext<CR>")
-map("n", "<A-h>", "<cmd>BufferMovePrevious<CR>")
+map("n", "<A-l>", "<cmd>BufferNext<CR>")
+map("n", "<A-h>", "<cmd>BufferPrevious<CR>")
+map("n", "<C-l>", "<cmd>BufferMoveNext<CR>")
+map("n", "<C-h>", "<cmd>BufferMovePrevious<CR>")
 map("n", "<C-w>", "<cmd>BufferClose<CR>")
 map("n", "<A-p>", "<cmd>BufferPick<CR>")
 
