@@ -20,7 +20,6 @@ paq {"b3nj5m1n/kommentary"}
 paq {"romgrk/barbar.nvim"}
 paq {"norcalli/nvim-colorizer.lua"}
 
---paq {"arcticicestudio/nord-vim"}
 paq {"hoob3rt/lualine.nvim"}
 paq {"kyazdani42/nvim-web-devicons"}
 paq {"ryanoasis/vim-devicons"}

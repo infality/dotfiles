@@ -15,7 +15,7 @@ local owncolors = {
     darkgreen=     '#5e8d6a',
     turquoise =    '#5e8d87',
     lightblue =   '#418fa4',
-    blue =         '#5480ab',
+    blue =         '#5f819d',
     darkblue =    '#456387',
     purple =      '#8a5c81',
     red =          '#cd515d', -- errors
@@ -23,7 +23,7 @@ local owncolors = {
 
 function mapValues()
     owncolors.functions = owncolors.turquoise;
-    owncolors.types = owncolors.lightblue;
+    owncolors.types = owncolors.blue;
     owncolors.fields = owncolors.darkgreen;
     owncolors.keywords = owncolors.blue;
     owncolors.misc = owncolors.darkblue;
