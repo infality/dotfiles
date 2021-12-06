@@ -64,7 +64,7 @@ local syntaxgroups = {
     MoreMsg = { fg = owncolors.foreground },
     NonText = { fg = owncolors.foreground },
     Normal = { fg = owncolors.foreground, bg = owncolors.background },
-    NormalFloat = { fg = owncolors.foreground },
+    NormalFloat = { fg = owncolors.foreground, bg = owncolors.dark1 },
     NormalNC = { fg = owncolors.foreground },
     Pmenu = { bg = owncolors.dark1 },
     PmenuSel = { bg = owncolors.dark2 },
@@ -213,6 +213,10 @@ local syntaxgroups = {
     LspReferenceText = { fg = owncolors.foreground },
     LspReferenceRead = { fg = owncolors.foreground },
     LspReferenceWrite = { fg = owncolors.foreground },
+
+    -- Compe
+    CompeDocumentation = { fg = owncolors.foreground, bg = owncolors.dark1 },
+    CompeDocumentationBorder = { fg = owncolors.foreground },
 
     -- Telescope
     TelescopePromptBorder = { fg = owncolors.dark3 },

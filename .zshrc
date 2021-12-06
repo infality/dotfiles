@@ -29,10 +29,13 @@ compinit
 texedit() { zathura ${1:0:-3}pdf &; nvim "$1"; }
 alias bpm="python ~/Programming/python/bpm.py"
 alias weather="~/Programming/rust/weather/target/release/weather"
-alias ydl="youtube-dl -o '~/Music/%(title)s.%(ext)s' -f m4a"
+alias ydl="yt-dlp -o '~/NewMusic/%(title)s.%(ext)s' -f m4a"
 alias xclip="xclip -selection c"
 alias win=~/bootWindows.sh
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+alias gr="git fetch && { git rebase || { git rebase --abort && git merge; } }"
+alias gp="git push"
 
 bindkey '^[Oc' forward-word
 bindkey '^[Od' backward-word
@@ -54,3 +57,6 @@ web-search
 source $ZSH/oh-my-zsh.sh
 
 export PATH="$PATH:~/.local/bin"
+
+# Created by `userpath` on 2021-11-19 11:51:04
+export PATH="$PATH:/home/alex/.local/bin"

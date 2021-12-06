@@ -33,7 +33,7 @@ require('lualine').setup {
     sections = {
         lualine_a = {'mode'},
         lualine_b = {'branch'},
-        lualine_c = {{'filename', path = 2}},
+        lualine_c = {{'filename', path = 1}},
         lualine_x = {'encoding', 'fileformat', 'filetype'},
         lualine_y = {{'diagnostics', sources = {'nvim_lsp'}}},
         lualine_z = {'location'}
@@ -87,6 +87,9 @@ map("n", "<leader>H", "0")
 map("n", "<leader>l", "g_")
 map("n", "<leader>L", "$")
 
+map("n", "<A-Left>", "<C-o>")
+map("n", "<A-Right>", "<C-i>")
+
 cmd('au BufReadPost * if line("\'\\"") > 0 && line("\'\\"") <= line("$") | exe "normal! g`\\"" | endif')
 
 
@@ -98,8 +101,9 @@ local lsp = require("lspconfig")
 
 lsp.clangd.setup {}
 lsp.rust_analyzer.setup{}
+lsp.zls.setup{}
 lsp.tsserver.setup{}
-lsp.pyls.setup {root_dir = lsp.util.root_pattern(".git", fn.getcwd())}
+lsp.pylsp.setup{root_dir = lsp.util.root_pattern(".git", fn.getcwd())}
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/alex/Programming/avalonia/omnisharp-linux-x64/run"
 lsp.omnisharp.setup{
@@ -120,7 +124,7 @@ map("n", "ga", "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>")
 map("n", "gl", "<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>")
 map("n", "<leader>ff", "<cmd>lua require('telescope.builtin').git_files()<CR>")
 map("n", "<leader>fd", "<cmd>lua require('telescope.builtin').file_browser()<CR>")
-map("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
+map("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>")
 map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<CR>")
 map("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
 local actions = require('telescope.actions')
@@ -128,7 +132,9 @@ require('telescope').setup{
   defaults = {
     mappings = {
       i = {
-        ["<esc>"] = actions.close
+        ["<esc>"] = actions.close,
+        ["<ScrollWheelUp>"] = actions.preview_scrolling_up,
+        ["<ScrollWheelDown>"] = actions.preview_scrolling_down
       },
     },
   }
@@ -165,29 +171,35 @@ vim.api.nvim_set_keymap("v", "<C-_>", "<Plug>kommentary_visual_default", {})
 
 -- Completion
 vim.o.completeopt = "menuone,noselect"
-require("compe").setup {
-    enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = "disable";
-    throttle_time = 80;
-    source_timeout = 200;
-    incomplete_delay = 400;
-    max_abbr_width = 100;
-    max_kind_width = 100;
-    max_menu_width = 100;
-    documentation = true;
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'disable';
+  throttle_time = 80;
+  source_timeout = 200;
+  resolve_timeout = 800;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = {
+    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+    max_width = 120,
+    min_width = 60,
+    max_height = math.floor(vim.o.lines * 0.3),
+    min_height = 1,
+  };
 
-    source = {
-        path = true;
-        buffer = true;
-        calc = true;
-        nvim_lsp = true;
-        nvim_lua = true;
-        vsnip = false;
-        ultisnips = false;
-    };
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+  };
 }
 
 local t = function(str)

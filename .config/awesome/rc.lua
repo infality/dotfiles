@@ -417,8 +417,6 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"}),
     awful.key({ modkey }, "d", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 
@@ -429,10 +427,10 @@ globalkeys = gears.table.join(
               {description = "open speedcrunch", group = "launcher"}),
     awful.key({ modkey }, "t", function () awful.spawn("thunar") end,
               {description = "open thunar", group = "launcher"}),
-    awful.key({ modkey }, "s", function () awful.spawn("code") end,
-              {description = "open code", group = "launcher"}),
     awful.key({ modkey, "Shift" }, "s", function () awful.spawn("flameshot gui") end,
               {description = "open flameshot", group = "launcher"}),
+    awful.key({ modkey }, "p", function() awful.spawn("/home/alex/Programming/avalonia/PlaylistPlayer/bin/release/net5.0/linux-x64/publish/PlaylistPlayer") end,
+              {description = "open PlaylistPlayer", group = "launcher"}),
 
     -- Media keys
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("playerctl play-pause") end),
