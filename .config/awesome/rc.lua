@@ -429,7 +429,7 @@ globalkeys = gears.table.join(
               {description = "open thunar", group = "launcher"}),
     awful.key({ modkey, "Shift" }, "s", function () awful.spawn("flameshot gui") end,
               {description = "open flameshot", group = "launcher"}),
-    awful.key({ modkey }, "p", function() awful.spawn("/home/alex/Programming/avalonia/PlaylistPlayer/bin/release/net5.0/linux-x64/publish/PlaylistPlayer") end,
+    awful.key({ modkey }, "p", function() awful.spawn("/home/alex/Programming/rust/playlist-player/target/release/playlist_player /home/alex/Music") end,
               {description = "open PlaylistPlayer", group = "launcher"}),
 
     -- Media keys

@@ -5,24 +5,23 @@ local opt = vim.opt
 
 
 -- Packages
-cmd "packadd paq-nvim"
-local paq = require("paq-nvim").paq
-paq {"savq/paq-nvim", opt = true}
-paq {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-paq {"neovim/nvim-lspconfig"}
-paq {"nvim-lua/popup.nvim"}
-paq {"nvim-lua/plenary.nvim"}
-paq {"kyazdani42/nvim-web-devicons"}
-paq {"nvim-telescope/telescope.nvim"}
-paq {"hrsh7th/nvim-compe"}
-paq {"lewis6991/gitsigns.nvim"}
-paq {"b3nj5m1n/kommentary"}
-paq {"romgrk/barbar.nvim"}
-paq {"norcalli/nvim-colorizer.lua"}
-
-paq {"hoob3rt/lualine.nvim"}
-paq {"kyazdani42/nvim-web-devicons"}
-paq {"ryanoasis/vim-devicons"}
+require('packer').startup(function()
+  use "wbthomason/packer.nvim"
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use "neovim/nvim-lspconfig"
+  use "nvim-lua/popup.nvim"
+  use "nvim-lua/plenary.nvim"
+  use "kyazdani42/nvim-web-devicons"
+  use "nvim-telescope/telescope.nvim"
+  use "hrsh7th/nvim-compe"
+  use "lewis6991/gitsigns.nvim"
+  use "b3nj5m1n/kommentary"
+  use "romgrk/barbar.nvim"
+  use "norcalli/nvim-colorizer.lua"
+  use "hoob3rt/lualine.nvim"
+  use "ryanoasis/vim-devicons"
+  use "lervag/vimtex"
+end)
 
 
 -- Color scheme
@@ -35,7 +34,7 @@ require('lualine').setup {
         lualine_b = {'branch'},
         lualine_c = {{'filename', path = 1}},
         lualine_x = {'encoding', 'fileformat', 'filetype'},
-        lualine_y = {{'diagnostics', sources = {'nvim_lsp'}}},
+        lualine_y = {{'diagnostics', sources = {'nvim_diagnostic'}}},
         lualine_z = {'location'}
     },
 }
@@ -251,6 +250,9 @@ map("n", "<C-w>", "<cmd>BufferClose<CR>")
 map("n", "<A-p>", "<cmd>BufferPick<CR>")
 
 require('colorizer').setup()
+
+g.vimtex_view_method = "zathura"
+g.vimtex_quickfix_mode = 0
 
 -- nvim bug workaround https://github.com/neovim/neovim/issues/11330
 cmd('autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"')
