@@ -41,8 +41,8 @@ require('lualine').setup {
 
 
 -- Settings
-cmd("syntax enable")
-cmd("filetype indent on")
+opt.syntax = "enable"
+opt.filetype = "on"
 opt.autoindent = true
 opt.expandtab = true
 opt.shiftwidth = 4
@@ -109,23 +109,23 @@ lsp.omnisharp.setup{
     cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) },
 }
 
-map("n", "gk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
-map("n", "gj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-map("n", ">", "<cmd>lua vim.lsp.buf.formatting()<CR>")
-map("n", "gi", "<cmd>lua vim.lsp.buf.hover()<CR>")
---map("n", "<space>m", "<cmd>lua vim.lsp.buf.rename()<CR>")
+map("n", "gk", "v:lua vim.lsp.diagnostic.goto_prev()<CR>")
+map("n", "gj", "v:lua vim.lsp.diagnostic.goto_next()<CR>")
+map("n", ">", "v:lua vim.lsp.buf.formatting()<CR>")
+map("n", "gi", "v:lua vim.lsp.buf.hover()<CR>")
+map("n", "<space>m", "v:lua vim.lsp.buf.rename()<CR>")
 
 
-map("n", "gr", "<cmd>lua require('telescope.builtin').lsp_references()<CR>")
-map("n", "gs", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>")
-map("n", "gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>")
-map("n", "ga", "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>")
-map("n", "gl", "<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>")
-map("n", "<leader>ff", "<cmd>lua require('telescope.builtin').git_files()<CR>")
-map("n", "<leader>fd", "<cmd>lua require('telescope.builtin').file_browser()<CR>")
-map("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>")
-map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<CR>")
-map("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
+map("n", "gr", "v:lua require('telescope.builtin').lsp_references()<CR>")
+map("n", "gs", "v:lua require('telescope.builtin').lsp_document_symbols()<CR>")
+map("n", "gd", "v:lua require('telescope.builtin').lsp_definitions()<CR>")
+map("n", "ga", "v:lua require('telescope.builtin').lsp_code_actions()<CR>")
+map("n", "gl", "v:lua require('telescope.builtin').lsp_document_diagnostics()<CR>")
+map("n", "<leader>ff", "v:lua require('telescope.builtin').git_files()<CR>")
+map("n", "<leader>fd", "v:lua require('telescope.builtin').file_browser()<CR>")
+map("n", "<leader>fg", "v:lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>")
+map("n", "<leader>fb", "v:lua require('telescope.builtin').buffers()<CR>")
+map("n", "<leader>fh", "v:lua require('telescope.builtin').help_tags()<CR>")
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
