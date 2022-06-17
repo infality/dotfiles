@@ -429,8 +429,8 @@ globalkeys = gears.table.join(
               {description = "open thunar", group = "launcher"}),
     awful.key({ modkey, "Shift" }, "s", function () awful.spawn("flameshot gui") end,
               {description = "open flameshot", group = "launcher"}),
-    awful.key({ modkey }, "p", function() awful.spawn("/home/alex/Programming/rust/playlist-player/target/release/playlist_player /home/alex/Music") end,
-              {description = "open PlaylistPlayer", group = "launcher"}),
+    awful.key({ modkey }, "p", function() awful.spawn("/home/alex/Programming/rust/implayer/target/release/implayer /home/alex/Music") end,
+              {description = "open ImPlayer", group = "launcher"}),
 
     -- Media keys
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("playerctl play-pause") end),
