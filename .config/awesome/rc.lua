@@ -88,7 +88,7 @@ mytextclock = wibox.widget.textclock()
 
 mystatus = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
-    wibox.container.margin(awful.widget.watch([[bash -c "ip -s link show enp0s31f6 | awk 'NR==4 { print $1 }'"]], 2, function(widget, stdout)
+    wibox.container.margin(awful.widget.watch([[bash -c "ip -s link show eno1 | awk 'NR==4 { print $1 }'"]], 2, function(widget, stdout)
         local current = stdout
         local diff = (current - received) / 2000
         received = current
@@ -98,7 +98,7 @@ mystatus = wibox.widget {
     wibox.container.margin(awful.widget.watch([[bash -c "df -hl | awk '/^\/dev\/sda3/ { print \"~/:\" $5 }'"]], 60), 5, 5, 3, 3),
     wibox.container.margin(awful.widget.watch([[bash -c "top -bn1 | grep 'MiB Mem :' | sed 's/.*, *\([0-9.]*\)%* used.*/\1/' | awk '{printf \"%.1f GB\", $1 / 1000}'"]], 10), 5, 5, 3, 3),
     wibox.container.margin(awful.widget.watch([[bash -c "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{printf \"%.0f%\", 100 - $1}'"]], 2), 5, 3, 3, 3),
-    wibox.container.margin(awful.widget.watch([[bash -c "cat /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input | awk '{print $1/1000 \"°C\"}'"]], 4), 5, 5, 3, 3),
+    wibox.container.margin(awful.widget.watch([[bash -c "cat /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input | awk '{print int($1/1000) \"°C\"}'"]], 4), 5, 5, 3, 3),
 }
 
 local taglist_buttons = gears.table.join(
@@ -156,6 +156,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 received = 0
+last_focused_screen = 1
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
@@ -329,6 +330,23 @@ function view_prev_active_tag()
     end
 end
 
+-- Tried to fix that apps are spawned on the screen containing the mouse if no
+-- client is focused rather than the last focused screen. However, this does
+-- not work because neither the screen parameter nor the callback in
+-- awful.spawn() do anything. This may be because some apps are not supporting
+-- startup notifications, but I couldn't find any app that works... Then there
+-- is also a workaround to set the startup_id on spawn, but that also does not
+-- do anything.
+-- TODO If this will ever be fixed the last_focused_screen value also needs to
+-- be updated on Mod+Number screen changes and maybe also in other places?
+function custom_spawn(c)
+    local s = last_focused_screen
+    if client.focus ~= nil then
+        s = client.focus.screen
+    end
+    awful.spawn(c, { screen = s.index }, function(t) gears.debug.print_warning("This is not executed :(") t.move_to_screen(s.index) end)
+end
+
 -- Mouse bindings
 root.buttons(gears.table.join(
     awful.button({ }, 1, function (c)
@@ -429,7 +447,7 @@ globalkeys = gears.table.join(
               {description = "open thunar", group = "launcher"}),
     awful.key({ modkey, "Shift" }, "s", function () awful.spawn("flameshot gui") end,
               {description = "open flameshot", group = "launcher"}),
-    awful.key({ modkey }, "p", function() awful.spawn("/home/alex/Programming/rust/implayer/target/release/implayer /home/alex/Music") end,
+    awful.key({ modkey }, "p", function() awful.spawn("/home/alex/Programming/rust/implayer_dev/target/release/implayer /home/alex/Music") end,
               {description = "open ImPlayer", group = "launcher"}),
 
     -- Media keys
@@ -658,7 +676,7 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("unfocus", function(c) last_focused_screen = c.screen.index c.border_color = beautiful.border_normal end)
 
 mouse.coords {
     x = 960,
@@ -666,6 +684,7 @@ mouse.coords {
 }
 awful.screen.focus(awful.screen.getbycoord(0,0))
 
+awful.spawn.once("nvidia-settings -l")
 awful.spawn.once("nm-applet &")
 awful.spawn.once("redshift -l 48:9 &")
 awful.spawn.once("compton --config ~/.compton.conf &")

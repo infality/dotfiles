@@ -6,23 +6,31 @@ local opt = vim.opt
 
 -- Packages
 require('packer').startup(function()
-  use "wbthomason/packer.nvim"
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use "neovim/nvim-lspconfig"
-  use "nvim-lua/popup.nvim"
-  use "nvim-lua/plenary.nvim"
-  use "kyazdani42/nvim-web-devicons"
-  use "nvim-telescope/telescope.nvim"
-  use "nvim-telescope/telescope-ui-select.nvim"
-  use "nvim-telescope/telescope-file-browser.nvim"
-  use "hrsh7th/nvim-compe"
-  use "lewis6991/gitsigns.nvim"
-  use "b3nj5m1n/kommentary"
-  use "romgrk/barbar.nvim"
-  use "norcalli/nvim-colorizer.lua"
-  use "hoob3rt/lualine.nvim"
-  use "ryanoasis/vim-devicons"
-  use "lervag/vimtex"
+    use "wbthomason/packer.nvim"
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use "neovim/nvim-lspconfig"
+    use "nvim-lua/popup.nvim"
+    use "nvim-lua/plenary.nvim"
+    use "kyazdani42/nvim-web-devicons"
+    use "nvim-telescope/telescope.nvim"
+    use "nvim-telescope/telescope-ui-select.nvim"
+    use "nvim-telescope/telescope-file-browser.nvim"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-cmdline"
+    use "hrsh7th/nvim-cmp"
+    use "lewis6991/gitsigns.nvim"
+    use "b3nj5m1n/kommentary"
+    use "romgrk/barbar.nvim"
+    use "norcalli/nvim-colorizer.lua"
+    use "hoob3rt/lualine.nvim"
+    use "ryanoasis/vim-devicons"
+    use "lervag/vimtex"
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
 end)
 
 
@@ -93,8 +101,18 @@ treesitter.setup {ensure_installed = "all", highlight = {enable = true}}
 local lsp = require("lspconfig")
 
 lsp.clangd.setup {}
-lsp.rust_analyzer.setup{}
+lsp.rust_analyzer.setup{
+    settings = {
+        ["rust-analyzer"] = {
+            rustc = {
+                source = "discover"
+            }
+        }
+    }
+}
 lsp.zls.setup{}
+lsp.html.setup{}
+lsp.cssls.setup{}
 lsp.tsserver.setup{}
 lsp.pylsp.setup{root_dir = lsp.util.root_pattern(".git", fn.getcwd())}
 lsp.ltex.setup{}
@@ -167,74 +185,45 @@ vim.api.nvim_set_keymap("v", "<C-_>", "<Plug>kommentary_visual_default", {})
 
 
 -- Completion
-vim.o.completeopt = "menuone,noselect"
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'disable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-  };
-}
-
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
+local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local check_back_space = function()
-    local col = vim.fn.col(".") - 1
-    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-        return true
-    else
-        return false
-    end
-end
+vim.o.completeopt = "menu,menuone,noselect"
+local cmp = require'cmp'
+cmp.setup({
+    preselect = cmp.PreselectMode.None,
+    mapping = cmp.mapping.preset.insert({
+        ['<Tab>'] = cmp.mapping.complete(),
+        -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        -- ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return fn["compe#complete"]()
-  end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  else
-    return t "<S-Tab>"
-  end
-end
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
 
-vim.keymap.set("i", "<C-Space>", "compe#complete()", {expr = true})
-vim.keymap.set("i", "<CR>", "compe#confirm('<CR>')", {expr = true})
-vim.keymap.set("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.keymap.set("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.keymap.set("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.keymap.set("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+        ["<S-Tab>"] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.select_prev_item()
+            end
+        end, { "i", "s" }),
+    }),
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+    }, {
+        { name = 'buffer' },
+    })
+})
 
 
 -- Tab bar
@@ -253,6 +242,21 @@ g.vimtex_view_method = "zathura"
 g.vimtex_quickfix_mode = 0
 cmd('au User VimtexEventQuit call vimtex#compiler#clean(0)')
 
+g.mkdp_preview_options = {
+    mkit = {},
+    katex = {},
+    uml = {},
+    maid = {},
+    disable_sync_scroll = 1,
+    sync_scroll_type = 'middle',
+    hide_yaml_meta = 1,
+    sequence_diagrams = {},
+    flowchart_diagrams = {},
+    content_editable = false,
+    disable_filename = 0,
+    toc = {}
+}
+
 -- nvim bug workaround https://github.com/neovim/neovim/issues/11330
-cmd('autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"')
+-- cmd('autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"')
 
