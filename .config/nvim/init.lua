@@ -27,15 +27,14 @@ require('packer').startup(function()
     use "hoob3rt/lualine.nvim"
     use "ryanoasis/vim-devicons"
     use "lervag/vimtex"
+    use "tie/llvm.vim"
     use({
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
     })
+    use "rktjmp/lush.nvim"
 end)
 
-
--- Color scheme
-require('owncolors')
 
 require('lualine').setup {
     options = {theme = 'onedark'},
@@ -66,6 +65,14 @@ opt.list = true
 opt.number = true
 opt.wrap = true
 opt.hidden = true
+opt.termguicolors = true
+opt.background = 'dark'
+opt.cursorline = true
+
+
+-- Color scheme
+--require('oldcolors')
+cmd[[colorscheme owncolors]]
 
 
 -- Mappings
@@ -116,6 +123,7 @@ lsp.cssls.setup{}
 lsp.tsserver.setup{}
 lsp.pylsp.setup{root_dir = lsp.util.root_pattern(".git", fn.getcwd())}
 lsp.ltex.setup{}
+lsp.sumneko_lua.setup{}
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/alex/Programming/avalonia/omnisharp-linux-x64/run"
 lsp.omnisharp.setup{

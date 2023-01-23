@@ -33,6 +33,7 @@ alias ydl="yt-dlp -o '~/NewMusic/%(title)s.%(ext)s' -f m4a"
 alias xclip="xclip -selection c"
 alias win=~/bootWindows.sh
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias releases="~/Programming/rust/music-releases/target/release/music_releases"
 
 alias gr="git fetch && { git rebase || { git rebase --abort && git merge; } }"
 alias gp="git push"
