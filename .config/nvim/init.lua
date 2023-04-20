@@ -1,3 +1,16 @@
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable",
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
+
 local cmd = vim.cmd
 local fn = vim.fn
 local g = vim.g
@@ -5,36 +18,30 @@ local opt = vim.opt
 
 
 -- Packages
-require("packer").startup(function()
-    use "wbthomason/packer.nvim"
-    use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
-    use "neovim/nvim-lspconfig"
-    use "nvim-lua/popup.nvim"
-    use "nvim-lua/plenary.nvim"
-    use "kyazdani42/nvim-web-devicons"
-    use "nvim-telescope/telescope.nvim"
-    use "nvim-telescope/telescope-ui-select.nvim"
-    use "nvim-telescope/telescope-file-browser.nvim"
-    use "hrsh7th/cmp-nvim-lsp"
-    use "hrsh7th/cmp-buffer"
-    use "hrsh7th/cmp-path"
-    use "hrsh7th/cmp-cmdline"
-    use "hrsh7th/nvim-cmp"
-    use "lewis6991/gitsigns.nvim"
-    use "b3nj5m1n/kommentary"
-    use "romgrk/barbar.nvim"
-    use "norcalli/nvim-colorizer.lua"
-    use "hoob3rt/lualine.nvim"
-    use "ryanoasis/vim-devicons"
-    use "lervag/vimtex"
-    use "mfussenegger/nvim-dap"
-    use "tie/llvm.vim"
-    use({
-        "iamcco/markdown-preview.nvim",
-        run = function() vim.fn["mkdp#util#install"]() end,
-    })
-    use "rktjmp/lush.nvim"
-end)
+require("lazy").setup({
+    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+    "neovim/nvim-lspconfig",
+    "nvim-lua/popup.nvim",
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope-ui-select.nvim",
+    "nvim-telescope/telescope-file-browser.nvim",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
+    "hrsh7th/nvim-cmp",
+    "lewis6991/gitsigns.nvim",
+    { "numToStr/Comment.nvim",           opts = {} },
+    { "romgrk/barbar.nvim",              dependencies = 'nvim-tree/nvim-web-devicons' },
+    "norcalli/nvim-colorizer.lua",
+    "nvim-lualine/lualine.nvim",
+    -- "ryanoasis/vim-devicons",
+    "lervag/vimtex",
+    "mfussenegger/nvim-dap",
+    { "iamcco/markdown-preview.nvim", build = function() vim.fn["mkdp#util#install"]() end, },
+    "rktjmp/lush.nvim",
+})
 
 
 require("lualine").setup {
@@ -99,6 +106,9 @@ vim.keymap.set("n", "<leader>L", "$")
 vim.keymap.set("n", "<A-Left>", "<C-o>")
 vim.keymap.set("n", "<A-Right>", "<C-i>")
 
+vim.api.nvim_set_keymap("n", "<C-_>", "gcc", {})
+vim.api.nvim_set_keymap("v", "<C-_>", "gb", {})
+
 cmd('au BufReadPost * if line("\'\\"") > 0 && line("\'\\"") <= line("$") | exe "normal! g`\\"" | endif')
 
 
@@ -111,7 +121,7 @@ local lsp = require("lspconfig")
 lsp.clangd.setup {}
 lsp.rust_analyzer.setup {
     settings = {
-            ["rust-analyzer"] = {
+        ["rust-analyzer"] = {
             rustc = {
                 source = "discover"
             }
@@ -124,7 +134,7 @@ lsp.cssls.setup {}
 lsp.tsserver.setup {}
 lsp.pylsp.setup { root_dir = lsp.util.root_pattern(".git", fn.getcwd()) }
 lsp.ltex.setup {}
-lsp.sumneko_lua.setup {}
+lsp.lua_ls.setup {}
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/alex/Programming/avalonia/omnisharp-linux-x64/run"
 lsp.omnisharp.setup {
@@ -153,9 +163,9 @@ require("telescope").setup {
     defaults = {
         mappings = {
             i = {
-                    ["<esc>"] = actions.close,
-                    ["<ScrollWheelUp>"] = actions.preview_scrolling_up,
-                    ["<ScrollWheelDown>"] = actions.preview_scrolling_down
+                ["<esc>"] = actions.close,
+                ["<ScrollWheelUp>"] = actions.preview_scrolling_up,
+                ["<ScrollWheelDown>"] = actions.preview_scrolling_down
             },
         },
     }
@@ -188,11 +198,6 @@ require("gitsigns").setup {
 }
 
 
-g.kommentary_create_default_mappings = false
-vim.api.nvim_set_keymap("n", "<C-_>", "<Plug>kommentary_motion_default", {})
-vim.api.nvim_set_keymap("v", "<C-_>", "<Plug>kommentary_visual_default", {})
-
-
 -- Completion
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -204,13 +209,13 @@ local cmp = require "cmp"
 cmp.setup({
     preselect = cmp.PreselectMode.None,
     mapping = cmp.mapping.preset.insert({
-            ["<Tab>"] = cmp.mapping.complete(),
+        ["<Tab>"] = cmp.mapping.complete(),
         -- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
-            ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-Space>"] = cmp.mapping.complete(),
         -- ["<C-e>"] = cmp.mapping.abort(),
-            ["<CR>"] = cmp.mapping.confirm({ select = false }),
-            ["<Tab>"] = cmp.mapping(function(fallback)
+        ["<CR>"] = cmp.mapping.confirm({ select = false }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
             elseif has_words_before() then
@@ -219,7 +224,7 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-            ["<S-Tab>"] = cmp.mapping(function()
+        ["<S-Tab>"] = cmp.mapping(function()
             if cmp.visible() then
                 cmp.select_prev_item()
             end
