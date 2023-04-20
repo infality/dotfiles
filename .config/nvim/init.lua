@@ -5,9 +5,9 @@ local opt = vim.opt
 
 
 -- Packages
-require('packer').startup(function()
+require("packer").startup(function()
     use "wbthomason/packer.nvim"
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
     use "neovim/nvim-lspconfig"
     use "nvim-lua/popup.nvim"
     use "nvim-lua/plenary.nvim"
@@ -27,6 +27,7 @@ require('packer').startup(function()
     use "hoob3rt/lualine.nvim"
     use "ryanoasis/vim-devicons"
     use "lervag/vimtex"
+    use "mfussenegger/nvim-dap"
     use "tie/llvm.vim"
     use({
         "iamcco/markdown-preview.nvim",
@@ -36,15 +37,15 @@ require('packer').startup(function()
 end)
 
 
-require('lualine').setup {
-    options = {theme = 'onedark'},
+require("lualine").setup {
+    options = { theme = "onedark" },
     sections = {
-        lualine_a = {'mode'},
-        lualine_b = {'branch'},
-        lualine_c = {{'filename', path = 1}},
-        lualine_x = {'encoding', 'fileformat', 'filetype'},
-        lualine_y = {{'diagnostics', sources = {'nvim_diagnostic'}}},
-        lualine_z = {'location'}
+        lualine_a = { "mode" },
+        lualine_b = { "branch" },
+        lualine_c = { { "filename", path = 1 } },
+        lualine_x = { "encoding", "fileformat", "filetype" },
+        lualine_y = { { "diagnostics", sources = { "nvim_diagnostic" } } },
+        lualine_z = { "location" }
     },
 }
 
@@ -66,13 +67,13 @@ opt.number = true
 opt.wrap = true
 opt.hidden = true
 opt.termguicolors = true
-opt.background = 'dark'
+opt.background = "dark"
 opt.cursorline = true
 
 
 -- Color scheme
---require('oldcolors')
-cmd[[colorscheme owncolors]]
+--require("oldcolors")
+cmd [[colorscheme owncolors]]
 
 
 -- Mappings
@@ -102,37 +103,37 @@ cmd('au BufReadPost * if line("\'\\"") > 0 && line("\'\\"") <= line("$") | exe "
 
 
 local treesitter = require("nvim-treesitter.configs")
-treesitter.setup {ensure_installed = "all", highlight = {enable = true}}
+treesitter.setup { ensure_installed = "all", highlight = { enable = true } }
 
 
 local lsp = require("lspconfig")
 
 lsp.clangd.setup {}
-lsp.rust_analyzer.setup{
+lsp.rust_analyzer.setup {
     settings = {
-        ["rust-analyzer"] = {
+            ["rust-analyzer"] = {
             rustc = {
                 source = "discover"
             }
         }
     }
 }
-lsp.zls.setup{}
-lsp.html.setup{}
-lsp.cssls.setup{}
-lsp.tsserver.setup{}
-lsp.pylsp.setup{root_dir = lsp.util.root_pattern(".git", fn.getcwd())}
-lsp.ltex.setup{}
-lsp.sumneko_lua.setup{}
+lsp.zls.setup {}
+lsp.html.setup {}
+lsp.cssls.setup {}
+lsp.tsserver.setup {}
+lsp.pylsp.setup { root_dir = lsp.util.root_pattern(".git", fn.getcwd()) }
+lsp.ltex.setup {}
+lsp.sumneko_lua.setup {}
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/alex/Programming/avalonia/omnisharp-linux-x64/run"
-lsp.omnisharp.setup{
-    cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) },
+lsp.omnisharp.setup {
+    cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
 }
 
 vim.keymap.set("n", "gk", "v:lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "gj", "v:lua vim.diagnostic.goto_next()<CR>")
-vim.keymap.set("n", ">", "v:lua vim.lsp.buf.formatting()<CR>")
+vim.keymap.set("n", ">", "v:lua vim.lsp.buf.format { async = true }<CR>")
 vim.keymap.set("n", "gi", "v:lua vim.lsp.buf.hover()<CR>")
 vim.keymap.set("n", "<space>m", "v:lua vim.lsp.buf.rename()<CR>")
 
@@ -147,43 +148,43 @@ vim.keymap.set("n", "<leader>fd", ":Telescope file_browser<CR>")
 vim.keymap.set("n", "<leader>fg", "v:lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>")
 vim.keymap.set("n", "<leader>fb", "v:lua require('telescope.builtin').buffers()<CR>")
 vim.keymap.set("n", "<leader>fh", "v:lua require('telescope.builtin').help_tags()<CR>")
-local actions = require('telescope.actions')
-require('telescope').setup{
-  defaults = {
-    mappings = {
-      i = {
-        ["<esc>"] = actions.close,
-        ["<ScrollWheelUp>"] = actions.preview_scrolling_up,
-        ["<ScrollWheelDown>"] = actions.preview_scrolling_down
-      },
-    },
-  }
+local actions = require("telescope.actions")
+require("telescope").setup {
+    defaults = {
+        mappings = {
+            i = {
+                    ["<esc>"] = actions.close,
+                    ["<ScrollWheelUp>"] = actions.preview_scrolling_up,
+                    ["<ScrollWheelDown>"] = actions.preview_scrolling_down
+            },
+        },
+    }
 }
-require('telescope').load_extension("ui-select")
-require('telescope').load_extension("file_browser")
+require("telescope").load_extension("ui-select")
+require("telescope").load_extension("file_browser")
 
 
 require("gitsigns").setup {
-  signs = {
-    add          = {hl = "GitSignsAdd"   , text = "│", numhl="GitSignsAddNr"   , linehl="GitSignsAddLn"},
-    change       = {hl = "GitSignsChange", text = "│", numhl="GitSignsChangeNr", linehl="GitSignsChangeLn"},
-    delete       = {hl = "GitSignsDelete", text = "_", numhl="GitSignsDeleteNr", linehl="GitSignsDeleteLn"},
-    topdelete    = {hl = "GitSignsDelete", text = "‾", numhl="GitSignsDeleteNr", linehl="GitSignsDeleteLn"},
-    changedelete = {hl = "GitSignsChange", text = "~", numhl="GitSignsChangeNr", linehl="GitSignsChangeLn"},
-  },
-  numhl = false,
-  linehl = false,
-  keymaps = {},
-  watch_gitdir = {
-    interval = 1000
-  },
-  current_line_blame = false,
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil,
-  diff_opts = {
-      internal = true
-  },
+    signs = {
+        add          = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+        change       = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+        delete       = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+        topdelete    = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+        changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+    },
+    numhl = false,
+    linehl = false,
+    keymaps = {},
+    watch_gitdir = {
+        interval = 1000
+    },
+    current_line_blame = false,
+    sign_priority = 6,
+    update_debounce = 100,
+    status_formatter = nil,
+    diff_opts = {
+        internal = true
+    },
 }
 
 
@@ -199,18 +200,17 @@ local has_words_before = function()
 end
 
 vim.o.completeopt = "menu,menuone,noselect"
-local cmp = require'cmp'
+local cmp = require "cmp"
 cmp.setup({
     preselect = cmp.PreselectMode.None,
     mapping = cmp.mapping.preset.insert({
-        ['<Tab>'] = cmp.mapping.complete(),
-        -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        -- ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-
-        ["<Tab>"] = cmp.mapping(function(fallback)
+            ["<Tab>"] = cmp.mapping.complete(),
+        -- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<C-Space>"] = cmp.mapping.complete(),
+        -- ["<C-e>"] = cmp.mapping.abort(),
+            ["<CR>"] = cmp.mapping.confirm({ select = false }),
+            ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
             elseif has_words_before() then
@@ -219,17 +219,16 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function()
+            ["<S-Tab>"] = cmp.mapping(function()
             if cmp.visible() then
                 cmp.select_prev_item()
             end
         end, { "i", "s" }),
     }),
     sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
+        { name = "nvim_lsp" },
     }, {
-        { name = 'buffer' },
+        { name = "buffer" },
     })
 })
 
@@ -244,11 +243,11 @@ vim.keymap.set("n", "<C-h>", "<cmd>BufferMovePrevious<CR>")
 vim.keymap.set("n", "<C-w>", "<cmd>BufferClose<CR>")
 vim.keymap.set("n", "<A-p>", "<cmd>BufferPick<CR>")
 
-require('colorizer').setup()
+require("colorizer").setup()
 
 g.vimtex_view_method = "zathura"
 g.vimtex_quickfix_mode = 0
-cmd('au User VimtexEventQuit call vimtex#compiler#clean(0)')
+cmd("au User VimtexEventQuit call vimtex#compiler#clean(0)")
 
 g.mkdp_preview_options = {
     mkit = {},
@@ -256,7 +255,7 @@ g.mkdp_preview_options = {
     uml = {},
     maid = {},
     disable_sync_scroll = 1,
-    sync_scroll_type = 'middle',
+    sync_scroll_type = "middle",
     hide_yaml_meta = 1,
     sequence_diagrams = {},
     flowchart_diagrams = {},
@@ -266,5 +265,4 @@ g.mkdp_preview_options = {
 }
 
 -- nvim bug workaround https://github.com/neovim/neovim/issues/11330
--- cmd('autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"')
-
+-- cmd("autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"")

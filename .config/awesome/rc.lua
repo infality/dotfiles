@@ -98,7 +98,7 @@ mystatus = wibox.widget {
     wibox.container.margin(awful.widget.watch([[bash -c "df -hl | awk '/^\/dev\/sda3/ { print \"~/:\" $5 }'"]], 60), 5, 5, 3, 3),
     wibox.container.margin(awful.widget.watch([[bash -c "top -bn1 | grep 'MiB Mem :' | sed 's/.*, *\([0-9.]*\)%* used.*/\1/' | awk '{printf \"%.1f GB\", $1 / 1000}'"]], 10), 5, 5, 3, 3),
     wibox.container.margin(awful.widget.watch([[bash -c "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{printf \"%.0f%\", 100 - $1}'"]], 2), 5, 3, 3, 3),
-    wibox.container.margin(awful.widget.watch([[bash -c "cat /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input | awk '{print int($1/1000) \"°C\"}'"]], 4), 5, 5, 3, 3),
+    wibox.container.margin(awful.widget.watch([[bash -c "cat /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon*/temp1_input | awk '{print int($1/1000) \"°C\"}'"]], 4), 5, 5, 3, 3),
 }
 
 local taglist_buttons = gears.table.join(

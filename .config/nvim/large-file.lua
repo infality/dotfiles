@@ -8,7 +8,21 @@ opt.filetype = "off"
 opt.undofile = false
 opt.swapfile = false
 opt.loadplugins = false
+opt.autoindent = true
+opt.shiftwidth = 4
+opt.smartindent = true
+opt.tabstop = 4
+opt.ignorecase = true
+opt.mouse = "a"
+opt.smartcase = true
+opt.linebreak = true
+opt.list = true
+opt.number = true
+opt.wrap = true
+opt.hidden = true
 opt.termguicolors = true
+opt.background = 'dark'
+opt.cursorline = true
 
 cmd [[colorscheme owncolors]]
 
