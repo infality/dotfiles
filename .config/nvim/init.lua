@@ -113,7 +113,7 @@ cmd('au BufReadPost * if line("\'\\"") > 0 && line("\'\\"") <= line("$") | exe "
 
 
 local treesitter = require("nvim-treesitter.configs")
-treesitter.setup { ensure_installed = "all", highlight = { enable = true } }
+treesitter.setup { ensure_installed = "all", ignore_install = { "smali" }, highlight = { enable = true } }
 
 
 local lsp = require("lspconfig")
