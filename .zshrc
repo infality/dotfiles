@@ -56,8 +56,12 @@ web-search
 )
 
 source $ZSH/oh-my-zsh.sh
+. $HOME/export-esp.sh
 
 export PATH="$PATH:~/.local/bin"
 
 # Created by `userpath` on 2021-11-19 11:51:04
 export PATH="$PATH:/home/alex/.local/bin"
+
+# opam configuration
+[[ ! -r /home/alex/.opam/opam-init/init.zsh ]] || source /home/alex/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

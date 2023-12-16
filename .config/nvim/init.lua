@@ -134,7 +134,7 @@ lsp.cssls.setup {}
 lsp.tsserver.setup {}
 lsp.pylsp.setup { root_dir = lsp.util.root_pattern(".git", fn.getcwd()) }
 lsp.ltex.setup {}
-lsp.lua_ls.setup {}
+lsp.lua_ls.setup { settings = { Lua = { diagnostics = { globals = { 'vim', } } } } }
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/alex/Programming/avalonia/omnisharp-linux-x64/run"
 lsp.omnisharp.setup {
@@ -184,7 +184,6 @@ require("gitsigns").setup {
     },
     numhl = false,
     linehl = false,
-    keymaps = {},
     watch_gitdir = {
         interval = 1000
     },
@@ -200,6 +199,7 @@ require("gitsigns").setup {
 
 -- Completion
 local has_words_before = function()
+    unpack = unpack or table.unpack
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
@@ -209,7 +209,7 @@ local cmp = require "cmp"
 cmp.setup({
     preselect = cmp.PreselectMode.None,
     mapping = cmp.mapping.preset.insert({
-        ["<Tab>"] = cmp.mapping.complete(),
+        -- ["<Tab>"] = cmp.mapping.complete(),
         -- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
