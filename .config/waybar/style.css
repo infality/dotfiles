@@ -1,0 +1,101 @@
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#waybar {
+    background: #222;
+    color: #777;
+    font-family: Cantarell, Noto Sans, sans-serif;
+    font-size: 13px;
+}
+
+#clock,
+#cpu,
+#memory,
+#network,
+#tray {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#clock {
+    font-family: Noto Mono;
+    /* font-weight: bold; */
+}
+
+#cpu {
+    font-family: Noto Mono;
+}
+
+#cpu.warning {
+    color: orange;
+}
+
+#cpu.critical {
+    color: red;
+}
+
+#memory {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    font-family: Noto Mono;
+}
+
+#memory.warning {
+    color: orange;
+}
+
+#memory.critical {
+    color: red;
+    animation-name: blink-critical;
+    animation-duration: 2s;
+}
+
+#disk {
+    padding: 0 3px;
+}
+
+#custom-bandwidth {
+    font-family: Noto Mono;
+    padding: 0 5px;
+}
+
+#network {
+    padding: 0 5px;
+}
+
+#network.disconnected {
+    color: orange;
+}
+
+#tray {
+    /* No styles */
+}
+
+#workspaces button {
+    border-top: 2px solid transparent;
+    /* To compensate for the top border and still have vertical centering */
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #888888;
+}
+
+#workspaces button.active {
+    border-color: #aaa;
+    background-color: #444;
+}
+
+#workspaces button.urgent {
+    border-color: #c9545d;
+    color: #c9545d;
+}
+
+#window {
+    color: #555;
+}

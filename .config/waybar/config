@@ -1,0 +1,93 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 27,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": [
+        "custom/bandwidth",
+        "network",
+        "disk#root",
+        "disk#home",
+        "memory",
+        "cpu",
+        "tray",
+        "clock#date",
+        "clock#time"
+    ],
+
+    "hyprland/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": false,
+        "warp-on-scroll": false,
+        "on-scroll-up": "hyprctl dispatch workspace m-1",
+        "on-scroll-down": "hyprctl dispatch workspace m+1"
+    },
+
+    "custom/bandwidth": {
+        "exec": "$HOME/.config/waybar/scripts/bandwidth"
+    },
+
+    "network": {
+        "interval": 3,
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "  {ipaddr}",
+        "format-disconnected": "⚠  Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+    "disk#root": {
+        "path": "/",
+        "format": "/: {percentage_used}%",
+    },
+
+    "disk#home": {
+        "path": "$HOME",
+        "format": "~/: {percentage_used}%",
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": " {used:0.1f}GB",
+        "tooltip-format": "{percentage}% used",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "tray": {
+        "spacing": 10
+    },
+
+    "clock#time": {
+        "interval": 1,
+        "format": "{:%H:%M:%S}",
+        "tooltip": false
+    },
+
+    "clock#date": {
+        "interval": 10,
+        "format": "  {:%e %b %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "weeks-pos": "left",
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+    },
+}
