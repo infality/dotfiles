@@ -24,6 +24,10 @@
         "on-scroll-down": "hyprctl dispatch workspace m+1"
     },
 
+    "hyprland/window": {
+        "separate-outputs": true,
+    },
+
     "custom/bandwidth": {
         "exec": "$HOME/.config/waybar/scripts/bandwidth"
     },
@@ -42,7 +46,7 @@
     },
 
     "disk#home": {
-        "path": "$HOME",
+        "path": "/home/alex",
         "format": "~/: {percentage_used}%",
     },
 
@@ -66,7 +70,8 @@
     },
 
     "tray": {
-        "spacing": 10
+        "spacing": 10,
+        "reverse-direction": true
     },
 
     "clock#time": {
@@ -84,7 +89,7 @@
             "format": {
                 "months":     "<span color='#ffead3'><b>{}</b></span>",
                 "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{:%W}</b></span>",
                 "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
                 "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
             }

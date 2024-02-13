@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Source: https://github.com/YodaEmbedding/dotfiles/blob/master/waybar/.config/waybar/scripts/bandwidth
+
 import argparse
 import subprocess
 from time import sleep
