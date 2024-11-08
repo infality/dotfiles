@@ -16,7 +16,8 @@ def default_interface():
     for line in process.stdout.splitlines():
         if line.startswith("default via"):
             return line.split()[4]
-    raise RuntimeError("No default interface found")
+    return "eno1"
+    # raise RuntimeError("No default interface found")
 
 
 def get_rx_tx_bytes(iface):

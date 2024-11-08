@@ -1,5 +1,5 @@
 export ZSH=/usr/share/oh-my-zsh
-export BROWSER=/usr/bin/firefox
+export BROWSER=/usr/bin/librewolf
 
 # Load version control information
 autoload -Uz vcs_info
@@ -34,9 +34,7 @@ alias xclip="xclip -selection c"
 alias win=~/bootWindows.sh
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias releases="~/Programming/rust/music-releases/target/release/music_releases"
-
-alias gr="git fetch && { git rebase || { git rebase --abort && git merge; } }"
-alias gp="git push"
+alias lastupdate="grep 'starting full system upgrade' /var/log/pacman.log | tail -1 | cut -c 2-20"
 
 bindkey '^[Oc' forward-word
 bindkey '^[Od' backward-word
@@ -65,3 +63,4 @@ export PATH="$PATH:/home/alex/.local/bin"
 
 # opam configuration
 [[ ! -r /home/alex/.opam/opam-init/init.zsh ]] || source /home/alex/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+

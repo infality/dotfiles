@@ -13,6 +13,7 @@ local orange     = hsl(40, 70, 45)
 local brown      = hsl(30, 55, 40)
 local darkgreen  = hsl(135, 20, 40)
 local green      = hsl(135, 20, 50)
+local green2     = hsl(135, 20, 80)
 local turquoise  = hsl(170, 20, 45)
 local cyan       = hsl(180, 50, 50)
 local lightblue  = hsl(193, 40, 45)
@@ -21,6 +22,7 @@ local blue2      = hsl(207, 25, 60)
 local darkblue   = hsl(213, 30, 40)
 local purple     = hsl(312, 20, 45)
 local red        = hsl(355, 55, 55)
+local red2       = hsl(355, 100, 88)
 
 ---@diagnostic disable: undefined-global
 local theme      = lush(function(injected_functions)
@@ -43,6 +45,9 @@ local theme      = lush(function(injected_functions)
         DiffChange { fg = purple },                   -- Diff mode: Changed line |diff.txt|
         DiffDelete { fg = red },                      -- Diff mode: Deleted line |diff.txt|
         DiffText { fg = orange },                     -- Diff mode: Changed text within a changed line |diff.txt|
+        GitSignsAdd { fg = green },
+        GitSignsChange { fg = orange },
+        GitSignsDelete { fg = red },
         EndOfBuffer {},                               -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
         TermCursor {},                                -- Cursor in a focused terminal
         TermCursorNC {},                              -- Cursor in an unfocused terminal
@@ -213,7 +218,6 @@ local theme      = lush(function(injected_functions)
         -- sym"@character.special" { }, -- SpecialChar
         -- sym"@number"            { }, -- Number
         -- sym"@boolean"           { }, -- Boolean
-        -- sym"@float"             { }, -- Float
         -- sym"@function"          { }, -- Function
         -- sym"@function.builtin"  { }, -- Special
         -- sym"@function.macro"    { }, -- Macro
@@ -231,6 +235,7 @@ local theme      = lush(function(injected_functions)
         -- sym"@variable"          { }, -- Identifier
         -- sym"@type"              { }, -- Type
         -- sym"@type.definition"   { }, -- Typedef
+        sym"@type.builtin"         { fg = blue },
         -- sym"@storageclass"      { }, -- StorageClass
         -- sym"@structure"         { }, -- Structure
         -- sym"@namespace"         { }, -- Identifier
@@ -238,6 +243,9 @@ local theme      = lush(function(injected_functions)
         -- sym"@preproc"           { }, -- PreProc
         -- sym"@debug"             { }, -- Debug
         -- sym"@tag"               { }, -- Tag
+        sym"@lsp.type.parameter"   { fg = green2 },
+        sym"@lsp.type.selfKeyword" { fg = green2 },
+        sym"@lsp.typemod.variable.mutable" { fg = red2 },
 
         -- barbar highlights
         BufferTabpageFill { bg = background },
