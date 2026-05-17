@@ -2,4 +2,4 @@
 
 cd ~
 
-exec Hyprland
+exec start-hyprland
